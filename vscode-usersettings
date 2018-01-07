@@ -4,6 +4,8 @@
     "workbench.startupEditor": "newUntitledFile",
     "workbench.colorTheme": "PowerShell ISE",
     "workbench.colorCustomizations": {
+        "terminal.background": "#012456",
+        "terminal.foreground": "#f0f0f0",
         "editor.background": "#C8B4A0",
         "editor.foreground": "#000000",
         "statusBar.background": "#080808",
