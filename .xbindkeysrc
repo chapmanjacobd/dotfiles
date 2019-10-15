@@ -1,0 +1,12 @@
+#"/usr/bin/xte -i 9 'mouseclick 3' 'mouseclick 9' &"
+#  b:8 + Release
+"xdotool key ctrl+w"
+ Release + b:9
+#'"\C-?":unix-word-rubout'
+#"Command 1; Command 2; Command 3"
+#  Control+F42
+#"xte 'key Page_Down'"
+#  b:9
+#"xte 'key Page_Up'"
+#  b:3+b:2
+
