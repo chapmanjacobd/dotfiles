@@ -1,0 +1,36 @@
+keycode  24  =  q             Q
+keycode  25  =  w             W
+keycode  26  =  f             F
+keycode  27  =  p             P
+keycode  28  =  b             B
+
+keycode  29  =  j             J
+keycode  30  =  l             L
+keycode  31  =  u             U
+keycode  32  =  y             Y
+keycode  33  =  semicolon     colon
+
+keycode  38  =  a             A
+keycode  39  =  r             R
+keycode  40  =  s             S
+keycode  41  =  t             T
+
+keycode  42  =  g             G
+keycode  43  =  m             M
+
+keycode  44  =  n             N
+keycode  45  =  e             E
+keycode  46  =  i             I
+keycode  47  =  o             O
+keycode  48  =  apostrophe    quotedbl
+
+keycode  52  =  x             X
+keycode  53  =  c             C
+keycode  54  =  d             D
+keycode  55  =  v             V
+keycode  56  =  z             Z
+keycode  57  =  k             K
+keycode  58  =  h             H
+
+keycode 66 =  BackSpace BackSpace BackSpace BackSpace
+clear Lock

@@ -56,6 +56,9 @@ bindsym $mod+semicolon exec urxvt -name opener -e fish -C 'o (fzf)'
 bindsym $mod+Shift+n [instance="calc"] move scratchpad
 bindsym $mod+n [instance="calc"] scratchpad show
 
+for_window [window_role="About"] floating enable
+
+for_window [class="mpv"] floating enable, sticky enable
 for_window [instance="yakuake"] floating enable
 for_window [instance="Borderlands"] floating enable
 for_window [instance="Launcher.exe"] floating enable
@@ -65,10 +68,12 @@ floating_modifier $ctl
 
 # start a terminal
 
-
 bindsym $ctl+$mod+b exec urxvt -e sh -c "ls; bash"
 #bindsym $ctl+$mod+space exec i3-sensible-terminal; exec "bash -c 'sleep 0.1s;i3-msg floating enable;i3-msg border normal 2;i3-msg resize set 400px 300px'"
 bindsym $ctl+$mod+space exec urxvt -name floatingwin
+bindsym $mod+t exec konsole
+for_window [class="konsole"] move down
+for_window [class="konsole"] resize shrink up 220px
 
 bindsym $mod+p exec keepass
 bindsym $alt+v exec geany --class floatingwin
@@ -146,10 +151,10 @@ bindsym $ctl+$mod+g layout tabbed
 bindsym $ctl+$mod+t layout toggle split
 
 # toggle tiling / floating
-bindsym $ctl+Shift+space "mark --add _; [con_mark=f] floating disable, border none, mark --add --toggle _; [con_mark=_] floating enable, border normal 2; mark --add --toggle f;"
+bindsym $ctl+Shift+space "mark --add _; [con_mark=f] floating disable, border none, mark --add --toggle _; [con_mark=_] floating enable, border none, sticky enable; mark --add --toggle f;"
 floating_maximum_size 800x700
 hide_edge_borders both
-new_float normal 2
+default_floating_border none
 show_marks no
 # change focus between tiling / floating windows
 #bindsym $ctl+space focus mode_toggle
@@ -208,10 +213,10 @@ mode "resize" {
         bindsym semicolon resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize grow width 10 px or 10 ppt
+        bindsym Down resize shrink height 10 px or 10 ppt
+        bindsym Up resize grow height 10 px or 10 ppt
+        bindsym Right resize shrink width 10 px or 10 ppt
 
         # back to normal: Enter or Escape or $ctl+r
         bindsym Return mode "default"
@@ -220,6 +225,7 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+bindsym $mod+v resize set 400px 300px; move position 1170px 625px
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -236,14 +242,15 @@ for_window [title="Desktop — Plasma"] kill; floating enable; border none
 
 # start application launchers
 bindsym $mod+d exec ~/.local/bin/dmenu_run_history -p 'Run: ' -l 10 -i -nb '#000000' -nf '#4c7899' -fn 'Droid Sans Mono-9:bold'
-bindsym $mod+q exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'Run: ' -l 10 -i -nb '#000000' -nf '#4c7899' -fn 'Droid Sans Mono-9:bold'"
-bindsym $mod+x exec krunner
+bindsym $mod+x exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'Run: ' -l 10 -i -nb '#000000' -nf '#4c7899' -fn 'Droid Sans Mono-9:bold'"
+bindsym $mod+q exec konsole -e ~/bin/fzf_launcher.sh
 bindsym $mod+e exec krusader
+bindsym $mod+Shift+e exec konsole -e nano /home/xk/bin/dotfiles/i3_plasma_config && cp /home/xk/bin/dotfiles/i3_plasma_config ~/.i3-plasma/.i3/config && i3-msg restart
 
 #---( direct launchers )---#
 
 bindsym $mod+Return exec sakura
-bindsym $mod+grave exec "konsole --new-tab"
+bindsym $mod+grave exec konsole --new-tab
 bindsym $mod+Shift+Return exec "emacsclient -c"
 bindsym $mod+Shift+F7 exec --no-startup-id "nitrogen --restore"
 bindsym $mod+Shift+F1 exec "thunderbird"
@@ -379,8 +386,9 @@ floating_modifier $mod
 #focus_follows_mouse no
 
 #no_focus [class="plasmashell"]
-#no_focus [window_role="pop-up"]
-#no_focus [window_type="notification"]
+no_focus [window_role="pop-up"]
+no_focus [window_type="notification"]
+#for_window [class="plasmashell" window_type="notification"] move position 1600 50
 
 #focus_on_window_activation none
 

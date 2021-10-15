@@ -15,6 +15,11 @@
 \set HISTCONTROL ignoredups
 \set HISTSIZE 10000
 \pset numericlocale
+\pset linestyle unicode
+\pset border 2
+\set x '\\setenv PAGER less'
+\set xx '\\setenv PAGER \'pspg -bX --no-mouse\''
+:xx
 \timing
 \pset pager on
 \unset QUIET

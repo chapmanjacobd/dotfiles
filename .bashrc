@@ -6,29 +6,43 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific environment
-PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+PATH="$HOME/.local/bin:$HOME/bin:$HOME/.pulumi/bin:$PATH"
 export PATH
-
-# Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
-
 # User specific aliases and functions
-dbt_run_changed() {
-    children=$1
-    models=$(git diff --name-only | grep '\.sql$' | awk -F '/' '{ print $NF }' | sed "s/\.sql$/${children}/g" | tr '\n' ' ')
-    echo "Running models: ${models}"
-    dbt run --models $models
-}
-export -f dbt_run_changed
+if [ ! -h $HOME/.xsession-errors ]; then
+ /bin/rm $HOME/.xsession-errors
+ ln -s /dev/null $HOME/.xsession-errors
+fi
+#export PATH="$HOME/bin:$PATH"
+#export GOPATH=$HOME/go
+#export VISUAL=nano
+#export EDITOR="$VISUAL"
 
-# Lowercased, shortened to 63 bytes, and with everything except 0-9 and a-z replaced with '-'.
-# No leading or trailing '-'. Useful with URLs, host names, and domain names.
-slugify () {
-  next=${1//+([^A-Za-z0-9])/-}
-  next=${next:0:63}
-  next=${next,,}
-  next=${next#-}
-  next=${next%-}
-  echo "$next"
-}
-export -f slugify
+###-tns-completion-start-###
+if [ -f /home/xk/.tnsrc ]; then
+    source /home/xk/.tnsrc
+fi
+###-tns-completion-end-###
+
+export LESSCHARSET=utf-8
+shopt -s histappend
+shopt -s cmdhist
+HISTCONTROL=ignoredups
+export HISTIGNORE="&:ls:[bf]g:exit"
+
+# Settings for interactive shell only inside this block
+if [[ $- == *i* ]]
+then
+
+    #Prevent Ctrl+S Freezing things
+    stty -ixon
+
+    shopt -s cdspell
+    bind "set completion-ignore-case on" # note: bind used instead of sticking these in .inputrc
+    bind "set bell-style none" # no bell
+    bind "set show-all-if-ambiguous On" # show list automatically, without double tab
+
+    complete -r cd
+
+    cd d/
+fi
