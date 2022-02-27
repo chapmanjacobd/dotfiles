@@ -1,9 +1,10 @@
 {
-  "python.terminal.activateEnvironment": false,
+  "python.terminal.activateEnvironment": true,
+  "editor.wordSeparators": "./\\()\"'-:,.;<>~!@#%^&*|+=[]{}`~，。？「」『』`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
   "python.venvPath": "${workspaceFolder}/.venv/bin/python",
   "python.pythonPath": ".venv/bin/python",
   "editor.cursorStyle": "block",
-  "editor.guides.bracketPairs": true,
+  "editor.guides.bracketPairs": false,
   "editor.autoIndent": "none",
   "files.encoding": "utf8",
   "files.insertFinalNewline": true,
@@ -12,10 +13,14 @@
   "editor.scrollBeyondLastLine": true,
   "editor.mouseWheelScrollSensitivity": 1,
   "files.trimTrailingWhitespace": true,
-  "editor.wordSeparators": "./\\()\"'-:,.;<>~!@#%^&*|+=[]{}`~，。？「」『』",
   "editor.wordWrap": "off",
   "editor.formatOnPaste": true,
   "editor.snippetSuggestions": "top",
+  "editor.suggest.shareSuggestSelections": true,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.suggestSelection": "recentlyUsedByPrefix",
+  "editor.tabCompletion": "onlySnippets",
+  "editor.rulers": [120],
   "keyboard.dispatch": "keyCode",
   "files.enableTrash": false,
   "js/ts.implicitProjectConfig.checkJs": true,
@@ -72,6 +77,7 @@
     "editor.lineHighlightBorder": "#9fced11f"
   },
   "editor.tokenColorCustomizations": {
+    "comments": "#1a6100",
     "textMateRules": [
       {
         "scope": "keyword.operator",
@@ -97,8 +103,6 @@
   "editor.minimap.showSlider": "always",
   "editor.minimap.renderCharacters": false,
   "editor.minimap.maxColumn": 80,
-
-  "editor.formatOnSave": true,
   "prettier.noSpaceEmptyFn": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "extensions.ignoreRecommendations": true,
@@ -112,10 +116,6 @@
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
-  "[elm]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "sbrink.elm"
-  },
   "[sql]": {
     "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
   },
@@ -124,7 +124,8 @@
     "*.sql": "jinja-sql",
     "*.tsql": "sql",
     "*.tidal": "haskell",
-    "*.svelte": "html"
+    "*.svelte": "html",
+    "*.py": "python"
   },
   "cSpell.userWords": [
     "Cejas",
@@ -168,7 +169,6 @@
   "workbench.iconTheme": "material-icon-theme",
   "r.bracketedPaste": true,
   "terminal.explorerKind": "external",
-  "editor.suggestSelection": "first",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "r.rterm.linux": "/home/xk/.local/bin/radian",
@@ -178,6 +178,12 @@
   "terminal.integrated.shell.linux": "/usr/bin/fish",
   "window.menuBarVisibility": "toggle",
   "r.alwaysUseActiveTerminal": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true,
+    "source.sortMembers": true
+  },
   "[typescript]": {
     "editor.codeActionsOnSave": {
       "source.organizeImports": false
@@ -216,13 +222,17 @@
   "sqltools.useNodeRuntime": true,
   "cSpell.enabled": true,
   "python.showStartPage": false,
+  "python.analysis.typeCheckingMode": "basic",
   "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["--line-length=120"],
   "python.languageServer": "Pylance",
+  "python.analysis.completeFunctionParens": true,
   "python.envFile": "${workspaceFolder}/.env",
   "[python]": {
     "gitlens.codeLens.symbolScopes": ["!Module"],
     "editor.formatOnPaste": false,
-    "editor.wordBasedSuggestions": true
+    "editor.wordBasedSuggestions": true,
+    "editor.defaultFormatter": "ms-python.python"
   },
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter.notebook.ipynb"
@@ -244,5 +254,15 @@
   "blockman.n08CustomColorOfDepth3": "hsla(207, 20%, 91%,60%)",
   "blockman.n09CustomColorOfDepth4": "hsla(207, 20%, 91%,70%)",
   "blockman.n10CustomColorOfDepth5": "hsla(207, 20%, 91%,80%)",
-  "blockman.n16EnableFocus": false
+  "blockman.n16EnableFocus": false,
+  "bracket-pair-colorizer-2.depreciation-notice": false,
+  "javascript.format.semicolons": "remove",
+  "javascript.suggest.completeFunctionCalls": true,
+  "[vue]": {
+    "editor.defaultFormatter": "johnsoncodehk.volar"
+  },
+  "volar.icon.splitEditors": false,
+  "volar.codeLens.scriptSetupTools": true,
+  "blockman.n01LineHeight": 0,
+  "notebook.output.textLineLimit": 300
 }
