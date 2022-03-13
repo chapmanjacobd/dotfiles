@@ -58,3 +58,4 @@ gcloud auth application-default login
 gcloud auth login
 #https://www.ctrl.blog/entry/fedora-hibernate.html
 ln -s d/31_Downloads/ Downloads
+pip install yt-dlp
