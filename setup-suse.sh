@@ -59,3 +59,9 @@ chsh -s /bin/fish
 gcloud init
 gcloud auth application-default login
 gcloud auth login
+
+
+wget https://download.brother.com/welcome/dlf006893/linux-brprinter-installer-2.2.3-1.gz
+unar linux-brprinter-installer-2.2.3-1.gz
+sudo bash linux-brprinter-installer-2.2.3-1 HL-L2300D
+
