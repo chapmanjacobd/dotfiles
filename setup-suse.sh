@@ -10,7 +10,7 @@ sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sudo zypper addrepo https://packages.microsoft.com/yumrepos/vscode vscode
 sudo zypper refresh
 
-sudo zypper install -y mpv python3 python3-pip git android-tools R ImageMagick bat code darktable cowsay dnscrypt-proxy exa evince expect fdupes fish gdal fzf geos-devel  gimp git-delta git-lfs htop inotify-tools jq kdiff3 keepassxc kitty krename lato-fonts libreoffice meld moreutils ncdu nmon nomacs picard podman-docker pspg  python ripgrep rstudio-desktop syncthing udunits2 wine xdotool xclip xbacklight wget  postgresql-devel breeze-gtk gdal-devel sqlite-devel bash-completion krusader xmodmap sysstat poppler-tools ghc-postgresql-libpq socat chromium fd gnu_parallel
+sudo zypper install -y mpv python3 python3-pip git android-tools R ImageMagick bat code darktable cowsay dnscrypt-proxy exa evince expect fdupes fish gdal fzf geos-devel  gimp git-delta git-lfs htop inotify-tools jq kdiff3 keepassxc kitty krename lato-fonts libreoffice meld moreutils ncdu nmon nomacs picard podman-docker pspg  python ripgrep rstudio-desktop syncthing udunits2 wine xdotool xclip xbacklight wget  postgresql-devel breeze-gtk gdal-devel sqlite-devel bash-completion krusader xmodmap sysstat poppler-tools ghc-postgresql-libpq socat chromium fd sxhkd xsel gnu_parallel
 
 fisher unnstall sentriz/fish-pipenv
 fisher install sentriz/fish-pipenv
