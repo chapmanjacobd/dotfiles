@@ -10,4 +10,4 @@ alias vi='vim'
 alias sudo="sudo "
 set PATH /home/xk/.npm-new-global/bin $PATH
 set PATH /home/xk/.local/bin $PATH
-
+sxhkd &
