@@ -41,7 +41,7 @@ cd bin/ && git clone https://github.com/tavianator/bfs
 cd bfs && make release && sudo make install
 
 cp etc/ssh/xk.conf /etc/ssh/sshd_config.d/
-systemctl restart sshd
+sudo systemctl enable --now sshd
 
 #setxkbmap us -variant altgr-intl -option caps:backspace
 
