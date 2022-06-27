@@ -2,6 +2,23 @@
 
 source setup-server.sh
 
+sudo dnf install https://download.nomachine.com/download/7.10/Linux/nomachine_7.10.1_1_x86_64.rpm
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDNOM8a1uNNCgaB0l5qALnACNxFzRZ1Nt9MBfbtrO5/2MkqWYQGGHBcXjIqGqhqTNfQvzFDCKzbaCYEMnE7d/TDyoNh7HhB6XtKi2qsYmDmUWkXfYCzWvRD+/45RiABQcJwJ2Q58fQ4CXeVJWRpdpWjIohOuGJe1diCOSDIurkTw9XqiGwVUU4tLfIdfUCCLYcFTvyz7XBL6LIvLkokxKD0FkDJvijxKVk0R0EMjYmoaVAQXblFDQhM0wg5urYo8Oz3pnPoSd/rTb35yy1e9Zrw3GqebV1q5pMolqz77gslZait/c0zq1xdS2TH7KNK8z0EQtM6LQ99TZPOwKtHGwTqCr/GM8cgJlNCCmwilPtX6fz3rSFhmw9MXZACVwUTVoONIc1cRcCoZr/rmDea4Ai1nYBslLsDFaLBFjR2rdFoDHpsND8ELX7KROh+4QZOxI6nfu3zw/xS5eLkMnF1I+9sTlclr03xPv5idCOX6PappCeSyKBN4PmvGQEeV8yWwU0=" > ~/.nx/config/authorized
+chmod 0600 ~/.nx/config/authorized.crt
+echo "EnableUPnP none" | sudo tee -a /usr/NX/etc/server.cfg
+echo "NXKeyBasedUsePAM 0" | sudo tee -a /usr/NX/etc/server.cfg
+echo "AcceptedAuthenticationMethods NX-private-key" | sudo tee -a /usr/NX/etc/server.cfg
+echo "EnableAdministratorLogin 0" | sudo tee -a /usr/NX/etc/server.cfg
+echo "EnableNetworkBroadcast 0" | sudo tee -a /usr/NX/etc/server.cfg
+echo "EnableSyslogSupport 1" | sudo tee -a /usr/NX/etc/server.cfg
+echo "EnableWebPlayer 0" | sudo tee -a /usr/NX/etc/server.cfg
+echo "EnableDiskSharing none" | sudo tee -a /usr/NX/etc/node.cfg
+echo "EnablePublicDiskSharing 0" | sudo tee -a /usr/NX/etc/node.cfg
+echo "EnableSyslogSupport 1" | sudo tee -a /usr/NX/etc/node.cfg
+sudo /usr/NX/bin/nxserver --restart
+
+echo "sshfs#xk@bababushka.duckdns.org:/mnt/d/	  /mnt/d	fuse   defaults,user,nofail,_netdev,reconnect,delay_connect,ConnectTimeout=5,ServerAliveInterval=5,TCPKeepAlive=no,port=564 0 0" | sudo tee -a /etc/fstab
+
 sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf group update core -y
 sudo dnf --with-optional -y groupinstall Multimedia
