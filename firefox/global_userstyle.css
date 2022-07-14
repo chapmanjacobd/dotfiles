@@ -1,3 +1,14 @@
+/* ==UserStyle==
+@name         Global LightBG Desert Sepia Medium Contrast
+@version      20220415.03.47
+@namespace    userstyles.world/user/chapmanjacobd
+@description  Built upon Solarized Dark Modified Colors. I discovered that adjusting my monitor to minimum brightness and using this style allowed a nice contrast so text was easy to read.
+
+Any portion of my own code I release as CC0
+@author       chapmanjacobd
+@license      CC Zero
+==/UserStyle== */
+
 /* AGENT_SHEET */
 @namespace html url(http://www.w3.org/1999/xhtml);
 
@@ -48,7 +59,7 @@ scrollbar {
     text-shadow: 0 0 3px #000 !important;
     box-shadow: none !important;
     background-color: unset !important;
-    background-image: unset;
+    background-image: none !important;
     /*     background-color: #c8b4a063 !important; */
     border-color: #444 !important;
     border-top-color: #444 !important;
@@ -125,11 +136,16 @@ div[class*="clearfix"] {
     -o-transition: opacity 0.2s ease;
 }
 
-.ytp-time-display {color:white !important;}
+.ytp-time-display, div [aria-label] {
+    color: black !important;
+background: #cebdab !important;
+}
 
+    
 .widget-pane-visible {
     background-color: #C8B4A0 !important;
 }
+    
 
 iframe,
 embed,
