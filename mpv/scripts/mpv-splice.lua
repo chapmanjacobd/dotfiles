@@ -7,7 +7,7 @@
 --
 -- Description:
 --
--- This script provides the hability to create video slices by grabbing two
+-- This script provides the ability to create video slices by grabbing two
 -- timestamps, which generate a slice from timestamp A[i] to timestamp B[i],
 -- e.g.:
 -- 	-> Slice 1: 00:10:34.25 -> 00:15:00.00.
@@ -122,19 +122,13 @@ local opt = require 'mp.options'
 -- Default variables
 
 local SCRIPT_NAME = "mpv-splice"
-local default_tmp_location = "~/tmpXXX"
-local default_output_location = mp.get_property("working-directory")
-
---------------------------------------------------------------------------------
 
 local splice_options = {
-	tmp_location = os.getenv("MPV_SPLICE_TEMP") and os.getenv("MPV_SPLICE_TEMP") or default_tmp_location,
-	output_location = os.getenv("MPV_SPLICE_OUTPUT") and os.getenv("MPV_SPLICE_OUTPUT") or default_output_location
+	tmp_location = "/tmp/XXXX",
+	output_location = '/mnt/d/79_Cinemagraph/Clips/mpv' or mp.get_property("working-directory")
 }
 opt.read_options(splice_options, SCRIPT_NAME)
 
-
-local concat_name = "concat.txt"
 
 local ffmpeg = "ffmpeg -hide_banner -loglevel warning"
 
@@ -243,18 +237,26 @@ function delete_slice()
 	end
 end
 
-function prevent_quit(name)
-	if start_time then
-		if os.time() - exit_time <= 2 then
-			mp.command(name)
-		else
-			exit_time = os.time()
-		end
-		notify(3000, "Slice has been marked. Press again to quit")
-	else
-		mp.command(name)
-	end
-end
+-- function prevent_quit(name)
+-- 	if start_time then
+-- 		if os.time() - exit_time <= 2 then
+-- 			mp.command(name)
+-- 		else
+-- 			exit_time = os.time()
+-- 		end
+-- 		notify(3000, "Slice has been marked. Press again to quit")
+-- 	else
+-- 		mp.command(name)
+-- 	end
+-- end
+
+
+-- mp.add_key_binding('q', "quit", function()
+-- 	prevent_quit("quit")
+-- end)
+-- mp.add_key_binding('Shift+q', "quit-watch-later", function()
+-- 	prevent_quit("quit-watch-later")
+-- end)
 
 function process_video()
 	local alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -313,15 +315,9 @@ function process_video()
 	end
 end
 
-mp.add_key_binding('q', "quit", function()
-	prevent_quit("quit")
-end)
-mp.add_key_binding('Shift+q', "quit-watch-later", function()
-	prevent_quit("quit-watch-later")
-end)
 
-mp.add_key_binding('Alt+t', "put_time", put_time)
-mp.add_key_binding('Alt+p', "show_times", show_times)
-mp.add_key_binding('Alt+c', "process_video", process_video)
-mp.add_key_binding('Alt+r', "reset_current_slice", reset_current_slice)
-mp.add_key_binding('Alt+d', "delete_slice", delete_slice)
+mp.add_key_binding('ctrl+t', "put_time", put_time)
+mp.add_key_binding('ctrl+p', "process_video", process_video)
+mp.add_key_binding('ctrl+r', "reset_current_slice", reset_current_slice)
+-- mp.add_key_binding('Alt+t', "show_times", show_times)
+-- mp.add_key_binding('ctrl+d', "delete_slice", delete_slice)

@@ -12,14 +12,6 @@
 -- This will set the save period to once every 60 seconds of playback, time while paused is not counted towards the save period timer.
 -- The default save period is 30 seconds.
 
-local options = require 'mp.options'
-
-local o = {
-  save_period = 30
-}
-
-options.read_options(o)
-
 local mp = require 'mp'
 
 local function save()
@@ -35,7 +27,7 @@ local function init()
     return
   end
 
-  local save_period_timer = mp.add_periodic_timer(o.save_period, save)
+  local save_period_timer = mp.add_periodic_timer(60, save)
 
   local function pause(name, paused)
     if paused then

@@ -185,14 +185,14 @@ function toggle_script()
 	end
 end
 
-mp.add_key_binding("Ctrl+n", "sub-skip-toggle", toggle_script)
+mp.add_key_binding("Ctrl+v", "sub-skip-toggle", toggle_script)
 
 function switch_mode()
 	seek_skip = not seek_skip
 	mp.osd_message("Seek skip " .. (seek_skip and "enabled" or "disabled"))
 end
 
-mp.add_key_binding("Ctrl+Alt+n", "sub-skip-switch-mode", switch_mode)
+mp.add_key_binding("Ctrl+Alt+v", "sub-skip-switch-mode", switch_mode)
 
 function set_speed_skip_speed(new_value)
 	cfg.speed_skip_speed = new_value
