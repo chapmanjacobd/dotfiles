@@ -5,8 +5,10 @@ script-opts-append=excerpt-no-pause-on-file-loaded=1
 script-opts-append=osc-windowcontrols=no
 script-opts-append=ontop-level=window
 ontop=yes
-screenshot-directory=d/92_Cool/
+screenshot-directory=~/d/92_Cool/
+screenshot-template=mpv-%F-%P
 keepaspect
+watch-later-options-remove=pause
 write-filename-in-watch-later-config
 geometry=100%:100%
 autofit=50%x40%
@@ -27,3 +29,9 @@ sub-gauss=1.0
 sub-gray=yes
 quiet=yes
 save-position-on-quit
+demuxer-seekable-cache=yes
+demuxer-max-bytes=500MiB
+demuxer-readahead-secs=180
+af="scaletempo2,lavfi=[pan=1c|c0=0.5*c0+0.5*c1],volume=replaygain-track"
+sub-fix-timing=yes
+replaygain=track
