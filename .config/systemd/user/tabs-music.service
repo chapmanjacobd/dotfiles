@@ -1,0 +1,11 @@
+
+
+[Unit]
+Description=/usr/bin/fish -c opentabs /home/xk/mc/_music
+Requires=mnt-d.mount
+
+[Service]
+RemainAfterExit=yes
+Environment="DISPLAY=:0"
+ExecStart=
+ExecStart="/usr/bin/fish" "-c" "opentabs /home/xk/mc/_music"
