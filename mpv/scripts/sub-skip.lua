@@ -1,3 +1,5 @@
+-- feel free to modify and/or redistribute as long as you give credit to the original creator; © 2022 Ben Kerman
+
 local cfg = {
 	default_state = true,
 	seek_mode_default = false,
@@ -8,10 +10,7 @@ local cfg = {
 	speed_skip_speed_delta = 0.1,
 	min_skip_interval_delta = 0.25
 }
-local script_name = mp.get_script_name()
-
-require 'mp.options'
-read_options(cfg, script_name, function(changes)
+require("mp.options").read_options(cfg, nil, function(changes)
 	if changes.default_state then toggle_script() end
 	if changes.seek_mode_default then switch_mode() end
 	if changes.min_skip_interval then set_min_interval(cfg.min_skip_interval) end
@@ -25,11 +24,13 @@ local sped_up = false
 local last_sub_end, next_sub_start
 
 function calc_next_delay()
-	local initial_delay = mp.get_property_number("sub-delay")
-
 	-- hide subtitles, otherwise sub could briefly flash on screen when stepping
-	local initial_visibility = mp.get_property_bool("sub-visibility")
-	if initial_visibility then mp.set_property_bool("sub-visibility", false) end
+	local was_visible = mp.get_property_bool("sub-visibility")
+	if was_visible then
+		mp.set_property_bool("sub-visibility", false)
+	end
+
+	local initial_delay = mp.get_property_number("sub-delay")
 
 	-- get time to next line by adjusting subtitle delay
 	-- so that the next line starts at the current time
@@ -37,7 +38,9 @@ function calc_next_delay()
 	local new_delay = mp.get_property_number("sub-delay")
 	mp.set_property_number("sub-delay", initial_delay)
 
-	mp.set_property_bool("sub-visibility", initial_visibility)
+	if was_visible then
+		mp.set_property_bool("sub-visibility", true)
+	end
 
 	-- if the delay didn't change, the next line hasn't been demuxed yet
 	-- (or there are no more lines)
@@ -66,7 +69,7 @@ seek_skip_timer = mp.add_periodic_timer(128, function()
 		if next_delay == nil then
 			-- if no line found, seek to end of demuxer cache (potentially unstable!)
 			local cache_duration = mp.get_property_number("demuxer-cache-duration")
-			local seek_time = cache_duration and cache_duration or 1
+			local seek_time = cache_duration or 1
 			mp.set_property_number("time-pos", time_pos + seek_time)
 			seek_skip_timer:resume()
 		else
@@ -145,29 +148,29 @@ function end_skip()
 	last_sub_end, next_sub_start = nil
 end
 
-function handle_sub_text_change(_, sub_text)
-	if sub_text == "" and not skipping then
+function handle_sub_change(_, sub_end)
+	if not sub_end and not skipping then
 		local time_pos = mp.get_property_number("time-pos")
 		local next_delay = calc_next_delay()
 
+		last_sub_end = time_pos
 		if next_delay ~= nil then
 			if next_delay < cfg.min_skip_interval then return
 			else next_sub_start = time_pos + next_delay end
 		end
-		last_sub_end = time_pos
 		start_skip()
-	elseif skipping and sub_text ~= nil and sub_text ~= "" then end_skip() end
+	elseif skipping and sub_end then end_skip() end
 end
 
 function activate()
-	mp.observe_property("sub-text", "string", handle_sub_text_change)
+	mp.observe_property("sub-end", "number", handle_sub_change)
 	active = true
 end
 
 function deactivate()
 	seek_skip_timer:kill()
 	end_skip()
-	mp.unobserve_property(handle_sub_text_change)
+	mp.unobserve_property(handle_sub_change)
 	active = false
 end
 
@@ -185,14 +188,14 @@ function toggle_script()
 	end
 end
 
-mp.add_key_binding("Ctrl+v", "sub-skip-toggle", toggle_script)
+mp.add_key_binding("Ctrl+v", "toggle", toggle_script)
 
 function switch_mode()
 	seek_skip = not seek_skip
 	mp.osd_message("Seek skip " .. (seek_skip and "enabled" or "disabled"))
 end
 
-mp.add_key_binding("Ctrl+Alt+v", "sub-skip-switch-mode", switch_mode)
+mp.add_key_binding("Ctrl+Alt+v", "switch-mode", switch_mode)
 
 function set_speed_skip_speed(new_value)
 	cfg.speed_skip_speed = new_value
@@ -200,11 +203,11 @@ function set_speed_skip_speed(new_value)
 	mp.osd_message("Skip speed: " .. new_value)
 end
 
-mp.add_key_binding("Ctrl+Alt+[", "sub-skip-decrease-speed", function()
+mp.add_key_binding("Ctrl+Alt+[", "decrease-speed", function()
 	set_speed_skip_speed(cfg.speed_skip_speed - cfg.speed_skip_speed_delta)
 end, {repeatable = true})
 
-mp.add_key_binding("Ctrl+Alt+]", "sub-skip-increase-speed", function()
+mp.add_key_binding("Ctrl+Alt+]", "increase-speed", function()
 	set_speed_skip_speed(cfg.speed_skip_speed + cfg.speed_skip_speed_delta)
 end, {repeatable = true})
 
@@ -213,10 +216,10 @@ function set_min_interval(new_value)
 	mp.osd_message("Minimum interval: " .. new_value)
 end
 
-mp.add_key_binding("Ctrl+Alt+-", "sub-skip-decrease-interval", function()
+mp.add_key_binding("Ctrl+Alt+-", "decrease-interval", function()
 	set_min_interval(cfg.min_skip_interval - cfg.min_skip_interval_delta)
 end, {repeatable = true})
 
-mp.add_key_binding("Ctrl+Alt++", "sub-skip-increase-interval", function()
+mp.add_key_binding("Ctrl+Alt++", "increase-interval", function()
 	set_min_interval(cfg.min_skip_interval + cfg.min_skip_interval_delta)
 end, {repeatable = true})

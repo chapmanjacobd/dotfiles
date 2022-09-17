@@ -1,7 +1,3 @@
-# dotfiles
+# deprecated
 
-lol u forgot again where this git repo is stored locally? 
-
-```
-~/bin/dotfiles/
-```
+replaced by https://github.com/chapmanjacobd/computer/
